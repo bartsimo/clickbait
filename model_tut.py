@@ -1,7 +1,3 @@
-# Lesen:
-# https://blog.ineuron.ai/Multinomial-Naive-Bayes-Classifier-explained-with-a-practical-NLP-problem-statement-lZIQGCqUfG
-# https://www.datacamp.com/tutorial/naive-bayes-scikit-learn#!
-
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer

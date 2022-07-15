@@ -1,3 +1,5 @@
+# Lesen:
+# https://blog.ineuron.ai/Multinomial-Naive-Bayes-Classifier-explained-with-a-practical-NLP-problem-statement-lZIQGCqUfG
 # https://www.datacamp.com/tutorial/naive-bayes-scikit-learn#!
 
 import pandas as pd
@@ -48,3 +50,7 @@ clf.fit(x_train,y_train)
 
 # Returns float of correct predictions/all predictions for info
 print(clf.score(x_test,y_test))
+
+y_pred = clf.predict(x_test)
+print(classification_report(y_test, y_pred))
+

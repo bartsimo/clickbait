@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Hello, Flask!"
+    return render_template("home.html")
 
 #several routes can lead to the "same page"
 @app.route("/hello/")
@@ -32,3 +32,11 @@ def get_data():
 # run app from terminal with: python -m flask run
 # or: python -m flask run --host=127.0.0.1 --port=5050
 
+# New functions
+@app.route("/about/")
+def about():
+    return render_template("about.html")
+
+@app.route("/contact/")
+def contact():
+    return render_template("contact.html")

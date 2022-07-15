@@ -18,11 +18,17 @@ app = Flask(__name__)
 def home():
     return "Hello, Flask!"
 
+#several routes can lead to the "same page"
 @app.route("/hello/")
+#eine Art wildcard kann scheinbar mit <> gesetzt werden.
 @app.route("/hello/<name>")
 def hello_there(name = None):
+    #in der args list können python funktionen benutzt werden
     return render_template("hello_there.html", name=name, date=datetime.now())
 
+@app.route("/api/data")
+def get_data():
+    return app.send_static_file("data.json")
 # run app from terminal with: python -m flask run
 # or: python -m flask run --host=127.0.0.1 --port=5050
 

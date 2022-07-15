@@ -1,3 +1,5 @@
+# https://www.datacamp.com/tutorial/naive-bayes-scikit-learn#!
+
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
@@ -38,3 +40,11 @@ x = cv.fit_transform(x)
 # sklearn.model_selection.train_test_split(*arrays, test_size=None, train_size=None, random_state=None, shuffle=True, stratify=None)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
+
+clf = MultinomialNB()
+
+# Trains model on training data
+clf.fit(x_train,y_train)
+
+# Returns float of correct predictions/all predictions for info
+print(clf.score(x_test,y_test))

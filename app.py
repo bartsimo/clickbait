@@ -3,7 +3,8 @@
 # https://towardsdatascience.com/develop-a-nlp-model-in-python-deploy-it-with-flask-step-by-step-744f3bdd7776
 # https://code.visualstudio.com/docs/python/tutorial-flask#_prerequisites
 
-
+# CONTAINER / DOCKER: HOW TO https://code.visualstudio.com/docs/python/tutorial-flask#_create-a-container-for-a-flask-app-using-the-docker-extension
+# https://docs.microsoft.com/azure/python/tutorial-deploy-containers-01
 from flask import Flask, render_template
 from datetime import datetime
 import re

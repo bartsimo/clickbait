@@ -1,43 +1,38 @@
-# To start in virtual environment: View --> Command Palette --> Terminal: Create New Terminal
+import os
+import cs50
 
-# https://towardsdatascience.com/develop-a-nlp-model-in-python-deploy-it-with-flask-step-by-step-744f3bdd7776
-# https://code.visualstudio.com/docs/python/tutorial-flask#_prerequisites
+from cs50 import SQL
+from flask import Flask, flash, redirect, render_template, url_for, request, session
+from flask_session import Session
 
-# CONTAINER / DOCKER: HOW TO https://code.visualstudio.com/docs/python/tutorial-flask#_create-a-container-for-a-flask-app-using-the-docker-extension
-# https://docs.microsoft.com/azure/python/tutorial-deploy-containers-01
-from flask import Flask, render_template
-from datetime import datetime
-import re
+import pandas as pd 
+import pickle
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+import joblib
 
+# Configure application
 app = Flask(__name__)
 
-# Flask's app.route decorator maps the URL route / to a function 
-# that returns content:
+# Ensure templates are auto-reloaded
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
+# Configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+# Configure CS50 Library to use SQLite database
+db = cs50.SQL("sqlite:///test.db")
+
+@app.after_request
+def after_request(response):
+    """Ensure responses aren't cached"""
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
+    return response
 
 @app.route("/")
 def home():
-    return render_template("home.html")
-
-#several routes can lead to the "same page"
-@app.route("/hello/")
-#eine Art wildcard kann scheinbar mit <> gesetzt werden.
-@app.route("/hello/<name>")
-def hello_there(name = None):
-    #in der args list können python funktionen benutzt werden
-    return render_template("hello_there.html", name=name, date=datetime.now())
-
-@app.route("/api/data")
-def get_data():
-    return app.send_static_file("data.json")
-# run app from terminal with: python -m flask run
-# or: python -m flask run --host=127.0.0.1 --port=5050
-
-# New functions
-@app.route("/about/")
-def about():
-    return render_template("about.html")
-
-@app.route("/contact/")
-def contact():
-    return render_template("contact.html")
+    return "Clickbait time!"

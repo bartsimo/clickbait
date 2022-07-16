@@ -4,17 +4,15 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import classification_report
-from sklearn.externals import joblib
+import joblib
 
-df = pd.read_csv("spam.csv", encoding="latin-1")
-# have tp specify that columns should be dropped with axis=1
-# inplace=True changes the df itself and does not make a new copy
-df.drop(['Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4'], axis=1, inplace=True)
-df.rename(columns={"v1": "class", "v2": "message"}, inplace=True)
-# Create new label column
-df['label'] = df['class'].map({'ham': 0, 'spam': 1})
-x = df["message"]
-y = df["label"]
+
+df = pd.read_csv("clickbait_data.csv", encoding="latin-1")
+x = df["headline"]
+y = df["clickbait"]
+
+# Check
+# print(df)
 
 #Create countVectorizer
 cv = CountVectorizer()
@@ -30,24 +28,35 @@ cv = CountVectorizer()
 # array of shape (n_samples, n_features)
 # Document-term matrix.
 
-
-x = cv.fit_transform(x)
+X = cv.fit_transform(x)
 
 # https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html
-
 # Split arrays or matrices into random train and test subsets
 # sklearn.model_selection.train_test_split(*arrays, test_size=None, train_size=None, random_state=None, shuffle=True, stratify=None)
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
+# Prediction method: Multinomial Naive Bayes
 clf = MultinomialNB()
 
 # Trains model on training data
-clf.fit(x_train,y_train)
+clf.fit(X_train,y_train)
 
 # Returns float of correct predictions/all predictions for info
-print(clf.score(x_test,y_test))
+print(clf.score(X_test,y_test))
 
-y_pred = clf.predict(x_test)
+# Predict on test data
+y_pred = clf.predict(X_test)
+
+# Evaluate predictions on test data
 print(classification_report(y_test, y_pred))
+
+# Save model as .pkl file for later use: “persist model in a standard format”
+# that is, models are persisted in a certain format specific to the language 
+# in development.
+joblib.dump(clf, 'clickbait_model.pkl')
+
+# Syntax to load model back:
+# NB_spam_model = open('NB_spam_model.pkl','rb')
+# clf = joblib.load(NB_spam_model)
 

@@ -93,4 +93,44 @@ than is typically needed for a parametric approach) is required in order to
 obtain an accurate estimate for f . Also: higher risk of overfitting.  
 **Overfitting:** It is an undesirable situation because
 the fit obtained will not yield accurate estimates of the response on new
-observations that were not part of the original training data set.
+observations that were not part of the original training data set.We have established that when inference is the goal, there are clear ad-
+vantages to using simple and relatively inflexible statistical learning meth-
+ods. In some settings, however, we are only interested in prediction, and
+the interpretability of the predictive model is simply not of interest. For
+instance, if we seek to develop an algorithm to predict the price of a
+stock, our sole requirement for the algorithm is that it predict accurately—
+interpretability is not a concern. In this setting, we might expect that it
+will be best to use the most flexible model available. Surprisingly, this is
+not always the case! We will often obtain more accurate predictions using
+a less flexible method. This phenomenon, which may seem counterintuitive
+at first glance, has to do with the potential for overfitting in highly flexible
+methods
+
+**Lasso** The lasso, discussed in Chapter 6, relies upon the lasso
+linear model (2.4) but uses an alternative fitting procedure for estimating
+the coefficients β 0 , β 1 , . . . , β p . The new procedure is more restrictive in es-
+timating the coefficients, and sets a number of them to exactly zero. Hence
+in this sense the lasso is a less flexible approach than linear regression.
+It is also more interpretable than linear regression, because in the final
+model the response variable will only be related to a small subset of the
+predictors—namely, those with nonzero coefficient estimates.
+
+Most statistical learning problems fall into one of two categories: supervised 
+or unsupervised. The examples that we have discussed so far in this chapter all fall into the supervised learning domain. For each observation of the
+predictor measurement(s) x i , i = 1, . . . , n there is an associated response
+measurement y i . We wish to fit a model that relates the response to the
+predictors, with the aim of accurately predicting the response for future
+observations (prediction) or better understanding the relationship between
+the response and the predictors (inference). Many classical statistical learn-
+ing methods such as linear regression and logistic regression (Chapter 4), as well as more modern approaches such as GAM, boosting, and support vec-
+tor machines, operate in the supervised learning domain. The vast majority
+of this book is devoted to this setting.
+By contrast, unsupervised learning describes the somewhat more chal-
+lenging situation in which for every observation i = 1, . . . , n, we observe
+a vector of measurements x i but no associated response y i . It is not pos-
+sible to fit a linear regression model, since there is no response variable
+to predict. In this setting, we are in some sense working blind; the sit-
+uation is referred to as unsupervised because we lack a response vari-
+able that can supervise our analysis. What sort of statistical analysis is
+possible? We can seek to understand the relationships between the variables
+or between the observations. One statistical learning tool that we may use in this setting is cluster analysis, or clustering.

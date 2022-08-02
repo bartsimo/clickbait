@@ -134,3 +134,93 @@ uation is referred to as unsupervised because we lack a response vari-
 able that can supervise our analysis. What sort of statistical analysis is
 possible? We can seek to understand the relationships between the variables
 or between the observations. One statistical learning tool that we may use in this setting is cluster analysis, or clustering.
+
+The MSE in (2.5) is computed using the training data that was used to
+fit the model, and so should more accurately be referred to as the training
+MSE. But in general, we do not really care how well the method works training
+MSEon the training data. Rather, we are interested in the accuracy of the pre-
+dictions that we obtain when we apply our method to previously unseen
+test data. Why is this what we care about? Suppose that we are interested test data
+in developing an algorithm to predict a stock’s price based on previous
+stock returns. We can train the method using stock returns from the past
+6 months. But we don’t really care how well our method predicts last week’s
+stock price. We instead care about how well it will predict tomorrow’s price
+or next month’s price.
+
+How can we go about trying to select a method that minimizes the test
+MSE? In some settings, we may have a test data set available—that is,
+we may have access to a set of observations that were not used to train
+the statistical learning method. We can then simply evaluate (2.6) on the
+test observations, and select the learning method for which the test MSE is
+smallest.
+
+In the right-hand panel of Figure 2.9, as the flexibility of the statistical
+learning method increases, we observe a monotone decrease in the training
+MSE and a U-shape in the test MSE. This is a fundamental property of
+statistical learning that holds regardless of the particular data set at hand
+and regardless of the statistical method being used. As model flexibility
+increases, training MSE will decrease, but the test MSE may not. When
+a given method yields a small training MSE but a large test MSE, we are
+said to be overfitting the data. This happens because our statistical learning
+procedure is working too hard to find patterns in the training data, and
+may be picking up some patterns that are just caused by random chance
+rather than by true properties of the unknown function f . When we overfit
+the training data, the test MSE will be very large because the supposed
+patterns that the method found in the training data simply don’t exist
+in the test data. Note that regardless of whether or not overfitting has
+occurred, we almost always expect the training MSE to be smaller than
+the test MSE because most statistical learning methods either directly or
+indirectly seek to minimize the training MSE. Overfitting refers specifically
+to the case in which a less flexible model would have yielded a smaller
+test MSE.
+
+What do we mean by the variance and bias of a statistical learning
+method? Variance refers to the amount by which ˆf would change if we
+estimated it using a different training data set. Since the training data
+are used to fit the statistical learning method, different training data sets
+will result in a different ˆf . But ideally the estimate for f should not vary
+too much between training sets. However, if a method has high variance
+then small changes in the training data can result in large changes in ˆf . In
+general, more flexible statistical methods have higher variance.
+
+On the other hand, bias refers to the error that is introduced by approxi-
+mating a real-life problem, which may be extremely complicated, by a much
+simpler model. For example, linear regression assumes that there is a linear
+relationship between Y and X 1 , X 2 , . . . , X p . It is unlikely that any real-life
+problem truly has such a simple linear relationship, and so performing lin-
+ear regression will undoubtedly result in some bias in the estimate of f .
+
+As a general rule, as we use more flexible methods, the variance will
+increase and the bias will decrease. The relative rate of change of these
+two quantities determines whether the test MSE increases or decreases. As
+we increase the flexibility of a class of methods, the bias tends to initially
+decrease faster than the variance increases. Consequently, the expected
+test MSE declines. However, at some point increasing flexibility has little
+impact on the bias but starts to significantly increase the variance. When
+this happens the test MSE increases.
+
+Thus far, our discussion of model accuracy has been focused on the regres-
+sion setting. But many of the concepts that we have encountered, such
+as the bias-variance trade-off, transfer over to the classification setting
+with only some modifications due to the fact that y i is no longer quan-
+titative. Suppose that we seek to estimate f on the basis of training obser-
+vations {(x 1 , y 1 ), . . . , (x n , y n )}, where now y 1 , . . . , y n are qualitative. The
+most common approach for quantifying the accuracy of our estimate ˆf is
+the training error rate, the proportion of mistakes that are made if we apply
+our estimate ˆf to the training observations. A good classifier is one for which
+the test error (2.9) is smallest.
+
+It is possible to show (though the proof is outside of the scope of this
+book) that the test error rate given in (2.9) is minimized, on average, by a
+very simple classifier that assigns each observation to the most likely class,
+given its predictor values. In other words, we should simply assign a test
+observation with predictor vector x 0 to the class j for which
+Pr(Y = j|X = x 0 ) (2.10)
+is largest. Note that (2.10) is a conditional probability: it is the probability that Y = j, given the observed predictor vector x 0 . This very simple clas-
+sifier is called the Bayes classifier. In a two-class problem where there are only two possible response values, say class 1 or class 2, the Bayes classifier corresponds to predicting class one if Pr(Y = 1|X = x 0 ) > 0.5, and class
+two otherwise.
+
+In theory we would always like to predict qualitative responses using the
+Bayes classifier. But for real data, we do not know the conditional distri-
+bution of Y given X, and so computing the Bayes classifier is impossi-
+ble.
